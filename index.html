@@ -167,17 +167,72 @@
         .name {
             font-size: 36px;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 16px;
             background: var(--ai-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .title {
-            font-size: 16px;
+        .ability-tags {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tag-row {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .ability-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .ability-tag svg {
+            flex-shrink: 0;
+        }
+
+        .ability-tag.primary {
+            background: var(--ai-gradient);
+            color: white;
+        }
+
+        .ability-tag.secondary {
+            background: var(--bg-elevated);
+            color: var(--accent-light);
+            border: 1px solid var(--accent);
+        }
+
+        .ability-tag.outline {
+            background: transparent;
             color: var(--text-secondary);
-            font-family: 'JetBrains Mono', monospace;
+            border: 1px solid var(--border);
+            font-size: 11px;
+            padding: 4px 10px;
+        }
+
+        .ability-tag:hover {
+            transform: translateY(-2px);
+        }
+
+        .ability-tag.primary:hover {
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .ability-tag.secondary:hover {
+            background: var(--accent-dim);
         }
 
         .hero-right {
@@ -769,9 +824,73 @@
             border-top: 1px solid var(--border);
         }
 
+        .export-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--ai-gradient);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
         .footer-text {
             font-size: 13px;
             color: var(--text-muted);
+        }
+
+        /* 打印样式 */
+        @media print {
+            @page {
+                size: A4;
+                margin: 0;
+            }
+
+            body {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .ai-bg {
+                display: none !important;
+            }
+
+            body {
+                background: #050508 !important;
+            }
+
+            .export-btn {
+                display: none !important;
+            }
+
+            .fade-in {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+
+            .avatar-glow, .avatar-ring {
+                animation: none !important;
+            }
+
+            section {
+                page-break-inside: avoid;
+            }
+
+            .container {
+                max-width: 100% !important;
+                padding: 20px !important;
+            }
         }
 
         /* 响应式 */
@@ -845,7 +964,32 @@
                         <img src="LF.jpg" alt="林峰" class="avatar">
                     </div>
                     <h1 class="name">林峰</h1>
-                    <p class="title">数字化转型专家 & AI应用实践者</p>
+                    <div class="ability-tags">
+                        <div class="tag-row">
+                            <span class="ability-tag primary">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                                数字化转型专家
+                            </span>
+                            <span class="ability-tag primary">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/><circle cx="7.5" cy="14.5" r="1.5"/><circle cx="16.5" cy="14.5" r="1.5"/></svg>
+                                AI应用实践者
+                            </span>
+                        </div>
+                        <div class="tag-row">
+                            <span class="ability-tag secondary">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                                飞书实践专家
+                            </span>
+                            <span class="ability-tag secondary">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                项目管理专家
+                            </span>
+                        </div>
+                        <div class="tag-row">
+                            <span class="ability-tag outline">PMP认证</span>
+                            <span class="ability-tag outline">17年经验</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="hero-right">
@@ -853,7 +997,7 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
                         </svg>
-                        PMP Certified | 14 Years Experience
+                        PMP Certified | 17 Years Experience
                     </div>
 
                     <h2 class="hero-title">
@@ -868,7 +1012,7 @@
 
                     <div class="hero-stats">
                         <div class="stat-item">
-                            <div class="stat-value">14<span>+</span></div>
+                            <div class="stat-value">17<span>+</span></div>
                             <div class="stat-label">年从业经验</div>
                         </div>
                         <div class="stat-item">
@@ -924,7 +1068,7 @@
                         </svg>
                     </div>
                     <h3 class="capability-title">产品战略规划</h3>
-                    <p class="capability-desc">14年产品研发经验，主导物流核心业务系统、协同办公、综合职能管理产品规划，擅长需求挖掘与产品迭代优化。</p>
+                    <p class="capability-desc">17年产品研发经验，主导物流核心业务系统、协同办公、综合职能管理产品规划，擅长需求挖掘与产品迭代优化。</p>
                 </div>
 
                 <div class="capability-card fade-in">
@@ -1423,6 +1567,14 @@
 
         <!-- Footer -->
         <footer>
+            <button class="export-btn" onclick="exportToPDF()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                导出PDF
+            </button>
             <p class="footer-text">© 2026 林峰 | 数字化转型专家 & AI应用实践者</p>
         </footer>
     </div>
@@ -1440,6 +1592,20 @@
         document.querySelectorAll('.fade-in').forEach(el => {
             observer.observe(el);
         });
+
+        // 导出PDF功能
+        function exportToPDF() {
+            // 显示所有元素
+            document.querySelectorAll('.fade-in').forEach(el => {
+                el.style.opacity = '1';
+                el.style.transform = 'none';
+            });
+
+            // 延迟执行打印，确保样式生效
+            setTimeout(() => {
+                window.print();
+            }, 100);
+        }
     </script>
 </body>
 </html>
