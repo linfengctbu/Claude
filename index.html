@@ -61,6 +61,45 @@
             position: relative;
         }
 
+        .avatar-container {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 32px;
+        }
+
+        .avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent);
+            box-shadow: 0 0 40px rgba(0, 212, 170, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .avatar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 60px rgba(0, 212, 170, 0.5);
+        }
+
+        .avatar-ring {
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            border: 2px dashed var(--accent);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
         .tag-line {
             display: inline-flex;
             align-items: center;
@@ -490,6 +529,10 @@
     <div class="container">
         <!-- Header -->
         <header>
+            <div class="avatar-container">
+                <div class="avatar-ring"></div>
+                <img src="LF.jpg" alt="个人头像" class="avatar">
+            </div>
             <div class="tag-line">digital_transformer</div>
             <h1>数字化解决方案专家</h1>
             <p class="subtitle">产品经理 · 架构师 · 项目管理专家</p>
