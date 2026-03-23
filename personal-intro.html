@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人介绍 | 数字化专家</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a24;
+            --accent: #00d4aa;
+            --accent-dim: rgba(0, 212, 170, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --text-dim: #606070;
+            --border: #2a2a3a;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 网格背景 */
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(0, 212, 170, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 170, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            padding: 100px 0 60px;
+            text-align: center;
+            position: relative;
+        }
+
+        .tag-line {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-dim);
+            border: 1px solid rgba(0, 212, 170, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--accent);
+            margin-bottom: 24px;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+        }
+
+        .tag-line::before {
+            content: '>';
+            color: var(--accent);
+        }
+
+        h1 {
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #fff 0%, #a0a0b0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+        }
+
+        .identity-tags {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .identity-tag {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 12px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .identity-tag:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .identity-tag .icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-dim);
+            border-radius: 6px;
+            color: var(--accent);
+            font-size: 14px;
+        }
+
+        .identity-tag span {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Section */
+        section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            font-size: 14px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            font-family: 'SF Mono', monospace;
+        }
+
+        .section-title::before {
+            content: '// ';
+        }
+
+        .section-heading {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 32px;
+        }
+
+        /* 核心优势 */
+        .advantage-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .advantage-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .advantage-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .advantage-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        .advantage-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--accent-dim);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .card-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* 系统技能 */
+        .systems-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .system-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .system-card:hover {
+            background: var(--bg-card);
+            border-color: var(--accent);
+        }
+
+        .system-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 8px;
+            font-family: 'SF Mono', monospace;
+        }
+
+        .system-full {
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-bottom: 12px;
+        }
+
+        .system-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+        }
+
+        .skill-tag {
+            font-size: 11px;
+            background: var(--bg-primary);
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: var(--text-secondary);
+        }
+
+        /* 辅助技能 */
+        .aux-skills {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 24px;
+        }
+
+        .aux-skill {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .aux-skill:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+
+        /* 职业经历 */
+        .timeline {
+            position: relative;
+            padding-left: 32px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 32px;
+        }
+
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -32px;
+            top: 8px;
+            width: 16px;
+            height: 16px;
+            background: var(--bg-primary);
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+        }
+
+        .timeline-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 24px;
+        }
+
+        .timeline-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .timeline-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* 成果 */
+        .achievements {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 24px;
+        }
+
+        .achievement {
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            padding: 24px;
+            border: 1px solid var(--border);
+        }
+
+        .achievement-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 8px;
+            font-family: 'SF Mono', monospace;
+        }
+
+        .achievement-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* 职业理念 */
+        .philosophy {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 48px;
+            text-align: center;
+            position: relative;
+        }
+
+        .philosophy::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 40px;
+            font-size: 80px;
+            color: var(--accent);
+            opacity: 0.2;
+            font-family: Georgia, serif;
+        }
+
+        .philosophy-text {
+            font-size: 20px;
+            line-height: 1.8;
+            color: var(--text-primary);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .contact-item span:first-child {
+            color: var(--accent);
+        }
+
+        /* 响应式 */
+        @media (max-width: 1024px) {
+            .advantage-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .systems-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
+            .advantage-grid {
+                grid-template-columns: 1fr;
+            }
+            .systems-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .achievements {
+                grid-template-columns: 1fr;
+            }
+            .identity-tags {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* 动画 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="tag-line">digital_transformer</div>
+            <h1>数字化解决方案专家</h1>
+            <p class="subtitle">产品经理 · 架构师 · 项目管理专家</p>
+            <div class="identity-tags">
+                <div class="identity-tag">
+                    <div class="icon">P</div>
+                    <span>数字化产品经理</span>
+                </div>
+                <div class="identity-tag">
+                    <div class="icon">A</div>
+                    <span>系统架构师</span>
+                </div>
+                <div class="identity-tag">
+                    <div class="icon">M</div>
+                    <span>项目管理专家</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- 核心优势 -->
+        <section>
+            <div class="section-title">Core Advantages</div>
+            <h2 class="section-heading">职业定位与核心优势</h2>
+            <div class="advantage-grid">
+                <div class="advantage-card animate-in delay-1">
+                    <div class="card-icon">🎯</div>
+                    <h3 class="card-title">数字化产品经理</h3>
+                    <p class="card-desc">聚焦数字化系统的需求挖掘、产品规划、原型设计与迭代优化，擅长结合业务场景打造贴合需求、可落地的产品解决方案。</p>
+                </div>
+                <div class="advantage-card animate-in delay-2">
+                    <div class="card-icon">🏗️</div>
+                    <h3 class="card-title">架构师</h3>
+                    <p class="card-desc">具备扎实的数字化架构设计能力，可完成系统架构规划、技术选型、架构落地与优化，搭建高可用、可扩展的系统架构。</p>
+                </div>
+                <div class="advantage-card animate-in delay-3">
+                    <div class="card-icon">📊</div>
+                    <h3 class="card-title">项目管理专家</h3>
+                    <p class="card-desc">精通项目全流程管理，具备丰富的大型数字化项目管控经验，擅长资源协调、风险管控、进度把控，确保项目按时按质落地。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 核心系统技能 -->
+        <section>
+            <div class="section-title">Tech Stack</div>
+            <h2 class="section-heading">精通八大核心系统</h2>
+            <div class="systems-grid">
+                <div class="system-card">
+                    <div class="system-name">CRM</div>
+                    <div class="system-full">客户关系管理</div>
+                    <div class="system-skills">
+                        <span class="skill-tag">客户生命周期</span>
+                        <span class="skill-tag">客户画像</span>
+                        <span class="skill-tag">销售流程</span>
+                    </div>
+                </div>
+                <div class="system-card">
+                    <div class="system-name">SRM</div>
+                    <div class="system-full">供应商关系管理</div>
+                    <div class="system-skills">
+                        <span class="skill-tag">供应商准入</span>
+                        <span class="skill-tag">采购管控</span>
+                        <span class="skill-tag">供需协同</span>
+                    </div>
+                </div>
+                <div class="system-card">
+                    <div class="system-name">BI</div>
+                    <div class="system-full">商业智能</div>
+                    <div class="system-skills">
+                        <span class="skill-tag">数据建模</span>
+                        <span class="skill-tag">可视化</span>
+                        <span class="skill-tag">决策支持</span>
+                    </div>
+                </div>
+                <div class="system-card">
+                    <div class="system-name">OA</div>
+                    <div class="system-full">办公自动化</div>
+                    <div class="system-skills">
+                        <span class="skill-tag">流程自动化</span>
+                        <span class="skill-tag">办公协同</span>
+                        <span class="skill-tag">权限管理</span>
+                    </div>
+                </div>
+                <div class="system-card">
+                    <div class="system-name">NC</div>
+                    <div class="system-full">用友NC系统</div>
+                    <div class="system-skills">
+                        <span class="skill-tag">财务管控</span>
+                        <span class="skill-tag">供应链</span>
+                        <span class="skill-tag">ERP</span>
+                    </div>
+                </div>
+                <div class="system-card">
+                    <div class="system-name">EAS</div>
+                    <div class="system-full">金蝶EAS系统</div>
+                    <div class="system-skills">
+                        <span class="skill-tag">集团管控</span>
+                        <span class="skill-tag">多组织协同</span>
+                        <span class="skill-tag">数字化转型</span>
+                    </div>
+                </div>
+                <div class="system-card">
+                    <div class="system-name">PMS</div>
+                    <div class="system-full">项目管理</div>
+                    <div class="system-skills">
+                        <span class="skill-tag">计划制定</span>
+                        <span class="skill-tag">进度跟踪</span>
+                        <span class="skill-tag">成本管控</span>
+                    </div>
+                </div>
+                <div class="system-card">
+                    <div class="system-name">OMS</div>
+                    <div class="system-full">订单管理</div>
+                    <div class="system-skills">
+                        <span class="skill-tag">订单履约</span>
+                        <span class="skill-tag">订单跟踪</span>
+                        <span class="skill-tag">异常处理</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="aux-skills">
+                <div class="aux-skill">Jira / Project</div>
+                <div class="aux-skill">Axure / 墨刀</div>
+                <div class="aux-skill">需求分析</div>
+                <div class="aux-skill">沟通协调</div>
+                <div class="aux-skill">跨部门协作</div>
+                <div class="aux-skill">数字化转型咨询</div>
+            </div>
+        </section>
+
+        <!-- 职业经历与成果 -->
+        <section>
+            <div class="section-title">Experience</div>
+            <h2 class="section-heading">职业经历与核心成果</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4 class="timeline-title">大型企业数字化转型项目</h4>
+                        <p class="timeline-desc">主导CRM系统重构项目，优化客户管理流程，整合多渠道数据源，构建统一客户画像体系。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4 class="timeline-title">企业BI数据可视化平台</h4>
+                        <p class="timeline-desc">搭建企业级BI数据平台，整合NC、EAS系统数据，构建多维度分析模型，支撑管理层战略决策。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4 class="timeline-title">OMS+SRM集成项目</h4>
+                        <p class="timeline-desc">管控订单与供应商系统集成项目，打通采购-订单-履约全链路，实现端到端业务闭环。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="achievements">
+                <div class="achievement">
+                    <div class="achievement-value">100%</div>
+                    <div class="achievement-label">项目按时交付率</div>
+                </div>
+                <div class="achievement">
+                    <div class="achievement-value">8+</div>
+                    <div class="achievement-label">核心系统精通</div>
+                </div>
+                <div class="achievement">
+                    <div class="achievement-value">10+</div>
+                    <div class="achievement-label">大型项目主导经验</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 职业理念 -->
+        <section>
+            <div class="section-title">Philosophy</div>
+            <h2 class="section-heading">职业理念</h2>
+            <div class="philosophy">
+                <p class="philosophy-text">
+                    以业务为核心，以技术为支撑，以项目为载体，打造高效、可落地、有价值的数字化解决方案，助力企业数字化转型升级。
+                </p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span>📧</span>
+                    <span>email@example.com</span>
+                </div>
+                <div class="contact-item">
+                    <span>📱</span>
+                    <span>138-xxxx-xxxx</span>
+                </div>
+                <div class="contact-item">
+                    <span>📍</span>
+                    <span>中国 · 北京</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // 滚动动画
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.advantage-card, .system-card, .timeline-item, .achievement').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
